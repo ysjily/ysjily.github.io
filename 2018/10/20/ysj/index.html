@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="lyf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="同余方程我们要解下面的方程  $ax\equiv c(mod \quad b)$  我们可以将其转化为  $ax-by &#x3D; c$  然后我们可以开始求解上面的方程，步骤如下：  令$d &#x3D; gcd(a,b)$，若$c$不能整除$d$，则原方程无整数解，否则将方程化简为$ax_0-by_0 &#x3D; c_0$。 用扩展欧几里得算法求出方程$ax_0-by_0 &#x3D; c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性同余方程">
+<meta property="og:url" content="https://ysjily.github.io/2018/10/20/ysj/index.html">
+<meta property="og:site_name" content="落樱浮记">
+<meta property="og:description" content="同余方程我们要解下面的方程  $ax\equiv c(mod \quad b)$  我们可以将其转化为  $ax-by &#x3D; c$  然后我们可以开始求解上面的方程，步骤如下：  令$d &#x3D; gcd(a,b)$，若$c$不能整除$d$，则原方程无整数解，否则将方程化简为$ax_0-by_0 &#x3D; c_0$。 用扩展欧几里得算法求出方程$ax_0-by_0 &#x3D; c">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-10-20T06:10:04.000Z">
+<meta property="article:modified_time" content="2025-11-27T07:23:45.215Z">
+<meta property="article:author" content="lyf">
+<meta property="article:tag" content="模方程">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>线性同余方程 - 落樱浮记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"ysjily.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="线性同余方程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-10-20 14:10" pubdate>
+          2018年10月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">线性同余方程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="同余方程"><a href="#同余方程" class="headerlink" title="同余方程"></a>同余方程</h2><p>我们要解下面的方程</p>
+<blockquote>
+<p>$ax\equiv c(mod \quad b)$</p>
+</blockquote>
+<p>我们可以将其转化为</p>
+<blockquote>
+<p>$ax-by &#x3D; c$</p>
+</blockquote>
+<p>然后我们可以开始求解上面的方程，步骤如下：</p>
+<ol>
+<li>令$d &#x3D; gcd(a,b)$，若$c$不能整除$d$，则原方程无整数解，否则将方程化简为$ax_0-by_0 &#x3D; c_0$。</li>
+<li>用扩展欧几里得算法求出方程$ax_0-by_0 &#x3D; c_0$的一组特解$x_0,y_0$。</li>
+<li>记$k &#x3D; c&#x2F;d$，则原方程$x,y$的通解为</li>
+</ol>
+<blockquote>
+<p>$x &#x3D; k \times  x_0 + t \times b &#x2F; d$</p>
+</blockquote>
+<blockquote>
+<p>$y &#x3D; k \times y_0 + t \times a &#x2F; d (t &#x3D; 1, 2,3,4….)$</p>
+</blockquote>
+<p>例题：见青蛙的约会</p>
+<h2 id="同余方程组"><a href="#同余方程组" class="headerlink" title="同余方程组"></a>同余方程组</h2><p>先讲个故事</p>
+<blockquote>
+<p>八卦记者想知道洛阳枫有多少个女朋友，洛阳枫十分神秘地告诉他：“我的女朋友啊，3个3个地数剩2个，5个5个地数剩3个，7个7个地数剩2个。”请问洛阳枫到底最少有几个女朋友？</p>
+</blockquote>
+<p>那么我们可以列出方程</p>
+<blockquote>
+<p>$x \equiv2(mod \quad 3)$</p>
+</blockquote>
+<blockquote>
+<p>$x \equiv3(mod \quad 5)$</p>
+</blockquote>
+<blockquote>
+<p>$x \equiv2(mod \quad 7)$</p>
+</blockquote>
+<p>那我们怎么解？（暴力枚举的请走开）</p>
+<p>首先我们先知道，如果我们得到了一个特解$x$，那么我们就可以得到最小解为$x % lcm(3, 5, 7)$。</p>
+<p>那么我们怎么搞到一个解呢？</p>
+<p>我们再知道如果有$k_1\equiv0(mod \quad a), k2 \equiv b(mod \quad a)$，那么$k1+k2 \equiv b(mod \quad a)$，有什么用呢？比如说我们现在有一个数$k$它满足$k% 7 &#x3D;2$，那么我们再加一个能被7整除的数也是满足的。</p>
+<p>那到底要干什么呢？也就是说我们对于每一个方程我们都可以构造一个解使其能整除其他方程的余数，这样它便满足我们上面说的那个性质。</p>
+<p>还是不懂？</p>
+<p>我们举个栗子，对于第一个方程我们构造满足上面规则的最小解，它既是$5,7$的最小公倍数，又满足方程$1$，他是多少呢？35。</p>
+<p>那么我们依葫芦画瓢，就可以得到三个方程的特解$35,63,30$，那么我们把这三个值加起来就是原方程组的一个特解$128$，我们代进去发现是满足的，<del>但洛阳枫怎么会有这么多女朋友</del>，于是我们减去三个余数的最小公倍数依旧是满足的。$128-lcm(3,5,7) &#x3D; 23$（<del>好像还是有点多</del>）</p>
+<p>那么我们考虑一个比较普遍的情况</p>
+<p>现在我们有$n$多个上面的方程，怎么办？</p>
+<p>比如</p>
+<blockquote>
+<p>$x_1 \equiv a_1(mod \quad b_1)$</p>
+</blockquote>
+<blockquote>
+<p>$x_2 \equiv a_2(mod \quad b_2)$</p>
+</blockquote>
+<blockquote>
+<p>$x_3 \equiv a_3(mod \quad b_3)$</p>
+</blockquote>
+<blockquote>
+<p>$x_4 \equiv a_4(mod \quad b_4)$</p>
+</blockquote>
+<blockquote>
+<p>…..</p>
+</blockquote>
+<blockquote>
+<p>$x_i \equiv a_i(mod \quad b_i)$</p>
+</blockquote>
+<h3 id="先考虑两两互质的情况"><a href="#先考虑两两互质的情况" class="headerlink" title="先考虑两两互质的情况"></a>先考虑两两互质的情况</h3><p>我们还是考虑上面的方法</p>
+<p>我们还是构造一个解是每个方程特解的和，那么我们可以把解这样表示：</p>
+<blockquote>
+<p>$k_1 \times lcm &#x2F; b_1 + k_2 \times lcm &#x2F; b_2 + ….k_i \times lcm &#x2F; b_i$</p>
+</blockquote>
+<p>其中</p>
+<blockquote>
+<p>$k_i * lcm &#x2F; b_i \equiv a_i(mod \quad b_i)$</p>
+</blockquote>
+<p>为什么我们可以这样表示？</p>
+<p>我们可以从之前的那个故事可以看出一些端倪，由于满足$k_i \times lcm &#x2F; b_i \equiv a_i(mod \quad b_i)$，所以当前方程的解$k_i * lcm &#x2F; b_i$是满足当前方程的，而其他方程的解一定是整除$b_i$的，加起来一定满足当前方程。所以整个方程的解是满足每个方程的。</p>
+<p>那我们再考虑怎么解上面的方程：</p>
+<p>我们先令$m_i &#x3D; lcm &#x2F; b_i$</p>
+<p>方程化为：$k_i * m_i \equiv a_i(mod \quad b_i)$</p>
+<p>我们想如果存在$k * m_i \equiv 1(mod \quad b_i)$</p>
+<p>那么$k_i $就等于 $k * a_i$</p>
+<p>那问题就转化为求解方程$k * m_i \equiv 1(mod \quad b_i)$</p>
+<p>其实就是求逆元，用exgcd搞一下就行了。</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LL long long</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">25</span>;<br>LL A[N], B[N];<br><span class="hljs-type">int</span> k;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">ex_gcd</span><span class="hljs-params">(LL a, LL b, LL &amp;x, LL &amp;y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">if</span>(b == <span class="hljs-number">0</span>)<br>	&#123;<br>		x = <span class="hljs-number">1</span>,y = <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	<span class="hljs-built_in">ex_gcd</span>(b, a % b, y, x);<br>	y -= a / b * x;<br>&#125;<br><span class="hljs-function">LL <span class="hljs-title">mul</span><span class="hljs-params">(LL x, LL y, LL mod)</span>  <span class="hljs-comment">//快速乘防止毒瘤出题人 </span></span><br><span class="hljs-function"></span>&#123;<br>	LL ans = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">for</span>(;y;y &gt;&gt;= <span class="hljs-number">1</span>, x = (x + x) % mod) <span class="hljs-keyword">if</span>(y&amp;<span class="hljs-number">1</span>) ans = (ans + x) % mod;<br>	<span class="hljs-keyword">return</span> ans;<br>&#125;<br><span class="hljs-function">LL <span class="hljs-title">work</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	LL re = <span class="hljs-number">0</span>, lcm = <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt;= k; ++i) lcm *= B[i];<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt;= k; ++i)<br>	&#123;<br>		LL a = lcm / B[i], x, y;<br>		<span class="hljs-built_in">ex_gcd</span>(a, B[i], x, y);<br>		x = (x % B[i] + B[i]) % B[i];<br>		re = (re + <span class="hljs-built_in">mul</span>(<span class="hljs-built_in">mul</span>(A[i], x, lcm), a, lcm)) % lcm;<br>	&#125;<br>	<span class="hljs-keyword">return</span> re;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;k);<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt;= k; ++i)<br>	<span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld&quot;</span>, &amp;A[i]);<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt;= k; ++i)<br>	<span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld&quot;</span>, &amp;B[i]);<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt;= k; ++i)<br>	A[i] = (A[i] % B[i] + B[i]) % B[i];<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>, <span class="hljs-built_in">work</span>());<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E8%AE%BA%E4%B8%93%E9%A2%98/" class="category-chain-item">数论专题</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%A8%A1%E6%96%B9%E7%A8%8B/" class="print-no-link">#模方程</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>线性同余方程</div>
+      <div>https://ysjily.github.io/2018/10/20/ysj/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>lyf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2018年10月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/10/20/ys/" title="树上差分">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">树上差分</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/10/19/2333/" title="123444">
+                        <span class="hidden-mobile">123444</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

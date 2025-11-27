@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="lyf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="[SDOI2009]虔诚的墓主人题目描述小W是一片新造公墓的管理人。公墓可以看成一块N×M的矩形，矩形的每个格点，要么种着一棵常青树，要么是一块还没有归属的墓地。 当地的居民都是非常虔诚的基督徒，他们愿意提前为自己找一块合适墓地。为了体现自己对主的真诚，他们希望自己的墓地拥有着较高的虔诚度。 一块墓地的虔诚度是指以这块墓地为中心的十字架的数目。一个十字架可以看成中间是墓地，墓地的正上、正下、正左、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虔诚的墓主人">
+<meta property="og:url" content="https://ysjily.github.io/2018/10/20/zjyAKIOI/index.html">
+<meta property="og:site_name" content="落樱浮记">
+<meta property="og:description" content="[SDOI2009]虔诚的墓主人题目描述小W是一片新造公墓的管理人。公墓可以看成一块N×M的矩形，矩形的每个格点，要么种着一棵常青树，要么是一块还没有归属的墓地。 当地的居民都是非常虔诚的基督徒，他们愿意提前为自己找一块合适墓地。为了体现自己对主的真诚，他们希望自己的墓地拥有着较高的虔诚度。 一块墓地的虔诚度是指以这块墓地为中心的十字架的数目。一个十字架可以看成中间是墓地，墓地的正上、正下、正左、">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-10-20T13:16:02.000Z">
+<meta property="article:modified_time" content="2025-11-27T07:23:45.116Z">
+<meta property="article:author" content="lyf">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>虔诚的墓主人 - 落樱浮记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"ysjily.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="虔诚的墓主人"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-10-20 21:16" pubdate>
+          2018年10月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">虔诚的墓主人</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="SDOI2009-虔诚的墓主人"><a href="#SDOI2009-虔诚的墓主人" class="headerlink" title="[SDOI2009]虔诚的墓主人"></a>[SDOI2009]虔诚的墓主人</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>小W是一片新造公墓的管理人。公墓可以看成一块N×M的矩形，矩形的每个格点，要么种着一棵常青树，要么是一块还没有归属的墓地。</p>
+<p>当地的居民都是非常虔诚的基督徒，他们愿意提前为自己找一块合适墓地。为了体现自己对主的真诚，他们希望自己的墓地拥有着较高的虔诚度。</p>
+<p>一块墓地的虔诚度是指以这块墓地为中心的十字架的数目。一个十字架可以看成中间是墓地，墓地的正上、正下、正左、正右都有恰好k棵常青树。</p>
+<p>小W希望知道他所管理的这片公墓中所有墓地的虔诚度总和是多少。</p>
+<p>对于30%的数据，满足1 ≤ N, M ≤ 1,000。</p>
+<p>对于60%的数据，满足1 ≤ N, M ≤ 1,000,000。</p>
+<p>对于100%的数据，满足1 ≤ N, M ≤ 1,000,000,000，0 ≤ xi ≤ N，0 ≤ yi ≤ M，1 ≤ W ≤ 100,000，1 ≤ k ≤ 10。</p>
+<p>存在50%的数据，满足1 ≤ k ≤ 2。</p>
+<p>存在25%的数据，满足1 ≤ W ≤ 10000。</p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>给你一个矩形，里面有一些物品，求这些物品构成的边长为k的十字架的数目</p>
+<p>首先我们可以得出一个式子</p>
+<p>$ans &#x3D; \sum C[l(x,y)][k] * C[r(x,y)][k] * C[u(x,y)][k]*C[d(x,y)][k]$</p>
+<p>其中$l,r,u,d$，表示$(x,y)$点左边，右边，上边和下边有多少个物品。</p>
+<p>最自然的想法是二维前缀和搞一下。</p>
+<p>然而我们看到$n,m$的数据灰常大，肯定布星啊</p>
+<p>然后我们发现$w$好像要小一点，可以离散化。</p>
+<p>然而$w&#x3D;100000,w^2$是跑不过的还是布星啊</p>
+<p>那肿么办？</p>
+<p>我们把所有物品的坐标按$y$排个序，我们发现夹在两个$y$相同的物品之间的空格的左边和右边的物品是一样的，我们只需要知道他们上面和下面有多少物品即可，用线段树维护一下这一位置上面有多少个物品即可。</p>
+<p>那我们只需要将排完序的物品扫一遍，顺便记录下这一行我们扫到了几个物品，然后对于同一行的两个物品之间的空格计算答案，最后把物品统计入线段树就$OK$辣！</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><code class="hljs prolog">#include &lt;iostream&gt;<br>#include &lt;stdio.h&gt;<br>#include &lt;cstring&gt;<br>#include &lt;algorithm&gt;<br>#define <span class="hljs-symbol">LL</span> long long<br>using namespace std;<br>const int <span class="hljs-symbol">N</span> = <span class="hljs-number">400010</span>;<br>const <span class="hljs-symbol">LL</span> mod = <span class="hljs-number">2147483648</span>;<br>struct ss&#123;<br>	<span class="hljs-symbol">LL</span> x, y;<br>&#125;;ss node[<span class="hljs-symbol">N</span>];<br><span class="hljs-symbol">LL</span> n, m;<br>int w, tot, cy, k;<br><span class="hljs-symbol">LL</span> hash[<span class="hljs-symbol">N</span>], <span class="hljs-symbol">C</span>[<span class="hljs-symbol">N</span>][<span class="hljs-number">15</span>], sumv[<span class="hljs-symbol">N</span> * <span class="hljs-number">4</span>], sumx[<span class="hljs-symbol">N</span> * <span class="hljs-number">4</span>], sumy[<span class="hljs-symbol">N</span> * <span class="hljs-number">4</span>], cx[<span class="hljs-symbol">N</span>];<br><span class="hljs-symbol">LL</span> ans;<br>int cmp(ss a, ss b)<br>&#123;<br>	return (a.y &lt; b.y || (a.y == b.y &amp;&amp; a.x &lt; b.x));<br>&#125;<br>void get_C()<br>&#123;<br>	for(int i = <span class="hljs-number">0</span>;i &lt;= w; ++i) <span class="hljs-symbol">C</span>[i][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>ll;<br>	for(int i = <span class="hljs-number">1</span>;i &lt;= w; ++i)<br>	 for(int j = <span class="hljs-number">1</span>;j &lt;= k; ++j)<br>	  <span class="hljs-symbol">C</span>[i][j] = (<span class="hljs-symbol">C</span>[i - <span class="hljs-number">1</span>][j] + <span class="hljs-symbol">C</span>[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>]) <span class="hljs-comment">% mod;</span><br>&#125;<br><span class="hljs-symbol">LL</span> query(int rt, int l, int r, int x, int y)<br>&#123;<br>	if(l &gt;= x &amp;&amp; r &lt;= y) <br>		return sumv[rt] <span class="hljs-comment">% mod;</span><br>	if(x &gt; r || y &lt; l) return <span class="hljs-number">0</span>;<br>	<span class="hljs-symbol">LL</span> ans = <span class="hljs-number">0</span>;<br>	int mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>	ans = (query(rt&lt;&lt;<span class="hljs-number">1</span>, l, mid, x, y) + query(rt&lt;&lt;<span class="hljs-number">1</span>|<span class="hljs-number">1</span>, mid + <span class="hljs-number">1</span>, r, x, y)) <span class="hljs-comment">% mod;</span><br>	return ans;<br>&#125;<br>void up(int rt)<br>&#123;<br>	sumv[rt] = (sumv[rt&lt;&lt;<span class="hljs-number">1</span>] + sumv[rt&lt;&lt;<span class="hljs-number">1</span>|<span class="hljs-number">1</span>]) <span class="hljs-comment">% mod;</span><br>&#125;<br>void update(int rt, int l, int r, int pos, <span class="hljs-symbol">LL</span> v)<br>&#123;<br>	if(l == r) <br>	&#123;<br>		sumv[rt] = v;return;<br>	&#125;<br>	int mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>	if(pos &lt;= mid) update(rt&lt;&lt;<span class="hljs-number">1</span>, l, mid, pos, v);<br>	else update(rt&lt;&lt;<span class="hljs-number">1</span>|<span class="hljs-number">1</span>, mid + <span class="hljs-number">1</span>, r, pos, v);<br>	up(rt);<br>&#125;<br>int main()<br>&#123;<br>	scanf(<span class="hljs-string">&quot;%lld%lld&quot;</span>, &amp;n, &amp;m);<br>	scanf(<span class="hljs-string">&quot;%d&quot;</span>, &amp;w);<br>	for(int i = <span class="hljs-number">1</span>;i &lt;= w; ++i)<br>	&#123;<br>		scanf(<span class="hljs-string">&quot;%lld%lld&quot;</span>, &amp;node[i].x, &amp;node[i].y);<br>		hash[++tot] = node[i].x, hash[++tot] = node[i].y;<br>	&#125;<br>	scanf(<span class="hljs-string">&quot;%d&quot;</span>, &amp;k);<br>	sort(hash + <span class="hljs-number">1</span>,hash + <span class="hljs-number">1</span>+ tot);<br>	int len = unique(hash + <span class="hljs-number">1</span>, hash + <span class="hljs-number">1</span> + tot) - hash - <span class="hljs-number">1</span>;n = <span class="hljs-number">0</span>;<br>	for(int i = <span class="hljs-number">1</span>;i &lt;= w; ++i)<br>	&#123;<br>		node[i].x = lower_bound(hash + <span class="hljs-number">1</span>, hash + <span class="hljs-number">1</span> + len, node[i].x) - hash;<br>		node[i].y = lower_bound(hash + <span class="hljs-number">1</span>, hash + <span class="hljs-number">1</span> + len, node[i].y) - hash;<br>		n = max(n, node[i].x);<br>		sumx[node[i].x] ++;<br>		sumy[node[i].y] ++;<br>	&#125;<br>	sort(node + <span class="hljs-number">1</span>, node + <span class="hljs-number">1</span> + w, cmp);<br>	get_C();<br>	for(int i = <span class="hljs-number">1</span>;i &lt;= w; ++i)<br>	&#123;<br>		<span class="hljs-symbol">LL</span> x = node[i].x, y = node[i].y;<br>		if(y == node[i - <span class="hljs-number">1</span>].y &amp;&amp; i &gt; <span class="hljs-number">1</span>)<br>		&#123;<br>			if(node[i].x - node[i - <span class="hljs-number">1</span>].x &gt; <span class="hljs-number">1</span>)<br>			ans = (ans + <span class="hljs-symbol">C</span>[cy][k] * <span class="hljs-symbol">C</span>[sumy[y] - cy][k] <span class="hljs-comment">% mod * query(1, 1, n, node[i - 1].x + 1, node[i].x - 1) % mod) % mod;</span><br>			cy++;<br>		&#125;<br>		else cy = <span class="hljs-number">1</span>;<br>		cx[x] ++;<br>		<span class="hljs-symbol">LL</span> v = <span class="hljs-symbol">C</span>[cx[x]][k] * <span class="hljs-symbol">C</span>[sumx[x] - cx[x]][k] <span class="hljs-comment">% mod;</span><br>		update(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, n, x, v <span class="hljs-comment">% mod); </span><br>	&#125;<br>	printf(<span class="hljs-string">&quot;%lld\n&quot;</span>, ans);<br>	return <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BA%BF%E6%AE%B5%E6%A0%91/" class="category-chain-item">线段树</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>虔诚的墓主人</div>
+      <div>https://ysjily.github.io/2018/10/20/zjyAKIOI/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>lyf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2018年10月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/10/20/magic/" title="神奇的-1/12">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">神奇的-1/12</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/10/20/ysjily/" title="洛阳枫想表白3">
+                        <span class="hidden-mobile">洛阳枫想表白3</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="lyf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="主要思路先说说 二分图最大匹配我们通过搜索每个男孩纸喜欢的女孩，如果这个女孩没有男友，就进行配对，如果已经名花有主，那就看看她的男友能不能换人（天下从不缺渣男……），所以我们dfs的作用是看这个男孩能不能找一个没有被追求过的女孩进行追求（天下从不缺怂男…..），所以匈牙利的经典操作中的一段代码 1if(match[girl]&#x3D;&#x3D;-1||dfs(match[girl])) 就可以理解了，表示这个男孩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二分图相关总结">
+<meta property="og:url" content="https://ysjily.github.io/2018/10/21/lyfzs/index.html">
+<meta property="og:site_name" content="落樱浮记">
+<meta property="og:description" content="主要思路先说说 二分图最大匹配我们通过搜索每个男孩纸喜欢的女孩，如果这个女孩没有男友，就进行配对，如果已经名花有主，那就看看她的男友能不能换人（天下从不缺渣男……），所以我们dfs的作用是看这个男孩能不能找一个没有被追求过的女孩进行追求（天下从不缺怂男…..），所以匈牙利的经典操作中的一段代码 1if(match[girl]&#x3D;&#x3D;-1||dfs(match[girl])) 就可以理解了，表示这个男孩">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/21/iBgegJ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/21/iBgmv9.png">
+<meta property="article:published_time" content="2018-10-21T07:41:32.000Z">
+<meta property="article:modified_time" content="2025-11-27T07:23:43.916Z">
+<meta property="article:author" content="lyf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s1.ax1x.com/2018/10/21/iBgegJ.png">
+  
+  
+  
+  <title>二分图相关总结 - 落樱浮记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"ysjily.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="二分图相关总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-10-21 15:41" pubdate>
+          2018年10月21日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">二分图相关总结</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="主要思路"><a href="#主要思路" class="headerlink" title="主要思路"></a>主要思路</h3><p>先说说</p>
+<h4 id="二分图最大匹配"><a href="#二分图最大匹配" class="headerlink" title="二分图最大匹配"></a>二分图最大匹配</h4><p>我们通过搜索每个男孩纸喜欢的女孩，如果这个女孩没有男友，就进行配对，如果已经名花有主，那就看看她的男友能不能换人（天下从不缺渣男……），所以我们dfs的作用是看这个男孩能不能找一个没有被追求过的女孩进行追求（天下从不缺怂男…..），所以匈牙利的经典操作中的一段代码</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">match</span>[girl]==<span class="hljs-number">-1</span>|<span class="hljs-type">|dfs</span>(<span class="hljs-keyword">match</span>[girl]))<br></code></pre></td></tr></table></figure>
+<p>就可以理解了，表示这个男孩A追求的女孩还没有人追求或者正在追求这个女孩的男孩B可以另求新欢，那么他就可以追求这个女孩</p>
+<p>再说说</p>
+<h4 id="带权二分图匹配。"><a href="#带权二分图匹配。" class="headerlink" title="带权二分图匹配。"></a>带权二分图匹配。</h4><p>由于上面这个模型引起了众多女同胞的愤怒，所以我们换一个</p>
+<p>我们现在有N个男生和N个女生，女生对一些男生有一定的好感度，要如何匹配使得女生们对她们的男友的好感度之和最大？</p>
+<p>我们在匈牙利的基础上加一个点权，表示女生对男生和男生对女生的期望值，女生点权置为女生对所有男生的最大好感度，如果女生对男生的期望值加上男生对女生的期望值之和等于边权，表示女生可以选择这位男生（当然其余备胎也是有机会的），如果这个女生发现自己所有喜欢的男生都被抢走了，就会<del>横刀夺爱</del>（女人何必为难女人）来使答案最优。</p>
+<p>比如十班要换座位了，现在给你一些人让你配对，让她们的好感度最大（快乐地生活在一起….），你一定求出最优解，否则Bug哥会把你打成篮球（逃）</p>
+<p>以下纯属娱乐，切勿对号入座！（Bug不要捶我！）</p>
+<p><img src="https://s1.ax1x.com/2018/10/21/iBgegJ.png" srcset="/img/loading.gif" lazyload alt="iBgegJ.png"></p>
+<p>一开始江美翔同学的expect（后用ex）为2，于是与Bug哥2+0&#x3D;&#x3D;2，配对成功！</p>
+<p>然后渣渣欣来了，她表示Bug哥是我的，于是江美翔尝试换人，但江美翔不干，凭什么啊（主要是找不到人符合配对原则），于是尝试失败</p>
+<p>所以尝试修改，这次我们遍历到了江美翔，渣渣欣和Bug哥，所以对他们的期望值进行修改（不然打起来怎么办），渣渣欣ex–，江美翔ex–，Bug发现竟然有两个人喜欢他，于是Bug哥ex++；</p>
+<p><img src="https://s1.ax1x.com/2018/10/21/iBgmv9.png" srcset="/img/loading.gif" lazyload alt="iBgmv9.png"></p>
+<p>她们进行协商后，江美翔发现文振鑫好像海星，于是江美翔选择了文振鑫，渣渣欣成功得手Bug哥。</p>
+<p>由于凤姐对熊大爱得太深，所以没有人敢来抢人，于是牵手成功。</p>
+<p>感谢你为我调换座位排忧解难，谢谢你的参与！恭喜你获得讲台前第一方位置附赠姚宝贝儿按摩票一张！</p>
+<p>撒花！</p>
+<p>所以我们可以看出，我们通过修改男孩与女孩的期望值来使调整答案，使其满足最小损失的条件下跑出匈牙利算法。复杂度为$n^3$。（由于博主太懒讲的十分简略，相关原理不懂的可以来私下解决….）</p>
+<p>LYH大佬出的<a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/T41356">模板题</a>，数据有些毒瘤</p>
+<p>说一下，KM算法针对的是一个完备的最佳匹配，而最大权匹配不一定是完备的，所以我们要对之前所有没有连上的边加上，边权赋为0就行了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> INF=<span class="hljs-number">1e15</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">1010</span>;<br><span class="hljs-type">int</span> n,m,e,change;<br><span class="hljs-type">long</span> <span class="hljs-type">long</span> love[N][N],ex_boy[N],ex_girl[N],slack[N];<br><span class="hljs-type">int</span> vis_boy[N],vis_girl[N],match[N];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> girl)</span>     <span class="hljs-comment">//这其实是个匈牙利 </span></span><br><span class="hljs-function"></span>&#123;<br>	vis_girl[girl]=<span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> boy=<span class="hljs-number">1</span>;boy&lt;=m;boy++)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(love[girl][boy]==<span class="hljs-number">-1</span>) <span class="hljs-keyword">continue</span>;<br>		<span class="hljs-keyword">if</span>(vis_boy[boy]) <span class="hljs-keyword">continue</span>;<br>		<span class="hljs-type">long</span> <span class="hljs-type">long</span> gap=ex_girl[girl]+ex_boy[boy]-love[girl][boy];<br>		<span class="hljs-keyword">if</span>(gap==<span class="hljs-number">0</span>)<br>		&#123;<br>			vis_boy[boy]=<span class="hljs-number">1</span>;<br>			<span class="hljs-keyword">if</span>(match[boy]==<span class="hljs-number">-1</span>||<span class="hljs-built_in">dfs</span>(match[boy]))<br>			&#123;<br>				match[boy]=girl;<br>				<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>			slack[boy]=<span class="hljs-built_in">min</span>(slack[boy],gap);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">KM</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">memset</span>(match,<span class="hljs-number">-1</span>,<span class="hljs-built_in">sizeof</span>(match));<br>	<span class="hljs-built_in">memset</span>(ex_boy,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(ex_boy));<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>	&#123;<br>		ex_girl[i]=love[i][<span class="hljs-number">1</span>];<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++)<br>		ex_girl[i]=<span class="hljs-built_in">max</span>(ex_girl[i],love[i][j]);              <span class="hljs-comment">//赋为最大期望 </span><br>	&#125;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=<span class="hljs-number">1</span>;k&lt;=n;k++)<br>	&#123;<br>		<span class="hljs-built_in">memset</span>(slack,<span class="hljs-number">63</span>,<span class="hljs-built_in">sizeof</span>(slack));<br>		<span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)<br>		&#123;<br>			<span class="hljs-built_in">memset</span>(vis_boy,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(vis_boy));<br>			<span class="hljs-built_in">memset</span>(vis_girl,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(vis_girl));<br>			<span class="hljs-keyword">if</span>(<span class="hljs-built_in">dfs</span>(k)) <span class="hljs-keyword">break</span>;<br>			<span class="hljs-type">long</span> <span class="hljs-type">long</span> d=INF;<br>			<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=m;i++)<span class="hljs-keyword">if</span>(!vis_boy[i])d=<span class="hljs-built_in">min</span>(d,slack[i]);  <span class="hljs-comment">//修改期望 </span><br>			<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<span class="hljs-keyword">if</span>(vis_girl[i])ex_girl[i]-=d;<br>			<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=m;i++)<span class="hljs-keyword">if</span>(vis_boy[i])ex_boy[i]+=d;<br>		&#125;<br>	&#125;<br>	<span class="hljs-type">long</span> <span class="hljs-type">long</span> res=<span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=m;i++)<br>	<span class="hljs-keyword">if</span>(match[i]!=<span class="hljs-number">-1</span>&amp;&amp;love[match[i]][i]&gt;=<span class="hljs-number">0</span>)res+=love[match[i]][i];   <span class="hljs-comment">//毒瘤三 </span><br>	<span class="hljs-keyword">return</span> res;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">memset</span>(love,<span class="hljs-number">-1</span>,<span class="hljs-built_in">sizeof</span>(love));<br>	<span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;e);<br>	<span class="hljs-keyword">if</span>(n&gt;m) &#123;                               <span class="hljs-comment">//毒瘤一 </span><br>	    <span class="hljs-built_in">swap</span>(n,m);<br>	    change=<span class="hljs-number">1</span>;<br>	&#125;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=e;i++)<br>	&#123;<br>		<span class="hljs-type">int</span> u,v;<br>		<span class="hljs-type">long</span> <span class="hljs-type">long</span> w;<br>		<span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%lld&quot;</span>,&amp;u,&amp;v,&amp;w);<br>		<span class="hljs-keyword">if</span>(change) <span class="hljs-built_in">swap</span>(u,v);<br>		love[u][v]=<span class="hljs-built_in">max</span>(love[u][v],w);       <span class="hljs-comment">//毒瘤二 </span><br>	&#125;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>,<span class="hljs-built_in">KM</span>());<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>	 <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++)<br>	  <span class="hljs-keyword">if</span>(love[i][j]==<span class="hljs-number">-1</span>)<br>	   love[i][j]=<span class="hljs-number">0</span>;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>,<span class="hljs-built_in">KM</span>());<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
+
+<p>建模问题刷了大量题后会保持更新（现在太弱了）</p>
+<p>放一些题</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P2756">飞行员配对方案</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3386">【模板】二分图匹配</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P1129">矩阵游戏</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P2055">假期的宿舍</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/UVA11383">少林决胜</a></p>
+<p>相关建模感悟实时更新，今天就这样吧。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>二分图相关总结</div>
+      <div>https://ysjily.github.io/2018/10/21/lyfzs/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>lyf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2018年10月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/10/21/music/" title="题解 P2743 【[USACO5.1]乐曲主题Musical Themes】">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">题解 P2743 【[USACO5.1]乐曲主题Musical Themes】</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/10/21/hacker/" title="UVA11825 Hackers&#39; Crackdown">
+                        <span class="hidden-mobile">UVA11825 Hackers&#39; Crackdown</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

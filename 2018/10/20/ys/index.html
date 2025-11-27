@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="lyf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="好久没写博客了（主要是博主太弱全在学习），今天发现了个很有意思的东东，但炒鸡好用。于是，便把这位仁兄记录了下来。没错，他就是——树上差分。 先摆一波题 天天爱跑步； 运输计划； 疫情控制； 松鼠的新家； 一堆noip的难题由此诞生。 好了，四不四已经跃跃欲试了呢？让我们先看一下 差分为何物。放一个水题：  “给你一个m×n的矩阵，然后使用k块地毯铺地。每片地毯都给出左下角和右上角坐标。问所有地毯铺">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树上差分">
+<meta property="og:url" content="https://ysjily.github.io/2018/10/20/ys/index.html">
+<meta property="og:site_name" content="落樱浮记">
+<meta property="og:description" content="好久没写博客了（主要是博主太弱全在学习），今天发现了个很有意思的东东，但炒鸡好用。于是，便把这位仁兄记录了下来。没错，他就是——树上差分。 先摆一波题 天天爱跑步； 运输计划； 疫情控制； 松鼠的新家； 一堆noip的难题由此诞生。 好了，四不四已经跃跃欲试了呢？让我们先看一下 差分为何物。放一个水题：  “给你一个m×n的矩阵，然后使用k块地毯铺地。每片地毯都给出左下角和右上角坐标。问所有地毯铺">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/20/iBSzss.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/20/iBpMo6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/20/iBpCd0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/20/iBpPoV.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/20/iBpSLn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/10/20/iBp9Zq.png">
+<meta property="article:published_time" content="2018-10-20T08:20:24.000Z">
+<meta property="article:modified_time" content="2025-11-27T07:23:46.585Z">
+<meta property="article:author" content="lyf">
+<meta property="article:tag" content="差分">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s1.ax1x.com/2018/10/20/iBSzss.png">
+  
+  
+  
+  <title>树上差分 - 落樱浮记</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"ysjily.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="树上差分"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-10-20 16:20" pubdate>
+          2018年10月20日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">树上差分</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>好久没写博客了（主要是博主太弱全在学习），今天发现了个<del>很有意思的东东</del>，但炒鸡好用。于是，便把这位仁兄记录了下来。没错，他就是——树上差分。</p>
+<p>先摆一波题</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P1600">天天爱跑步</a>；</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P2680">运输计划</a>；</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P1084">疫情控制</a>；</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3258">松鼠的新家</a>；</p>
+<p>一堆noip的难题由此诞生。</p>
+<p>好了，四不四已经跃跃欲试了呢？让我们先看一下</p>
+<h2 id="差分为何物。"><a href="#差分为何物。" class="headerlink" title="差分为何物。"></a>差分为何物。</h2><p>放一个水题：</p>
+<pre><code class="hljs"> “给你一个m×n的矩阵，然后使用k块地毯铺地。每片地毯都给出左下角和右上角坐标。问所有地毯铺完之后，还有多少个整点（所谓整点，即横、纵坐标均为整数的点）没有被地毯覆盖。”
+</code></pre>
+<p>想到暴力：1.暴力枚举每张地毯</p>
+<p> 2.将所有被覆盖的点均做上标记</p>
+<p>  3.最后再枚举所有整点，若未被标记则ans+1；</p>
+<p>然而时间复杂度是O（mnk）的，直接超时。</p>
+<p>竟然有人想用线段树？太强了，考场祝您一路顺风。</p>
+<p>考虑差分</p>
+<p><img src="https://s1.ax1x.com/2018/10/20/iBSzss.png" srcset="/img/loading.gif" lazyload alt="iBSzss.png"></p>
+<p>用前缀和的方式进行维护，比如我们覆盖了2到5.</p>
+<p><img src="https://s1.ax1x.com/2018/10/20/iBpMo6.png" srcset="/img/loading.gif" lazyload alt="iBpMo6.png"></p>
+<p>在2那里加上1，那么2之后的前缀和就都是1（表示覆盖）了。</p>
+<p>然而我们要找的是2到5，不是2以后，所以在6那里要减1。</p>
+<p><img src="https://s1.ax1x.com/2018/10/20/iBpCd0.png" srcset="/img/loading.gif" lazyload alt="iBpCd0.png"></p>
+<p>所以我们要求的前缀和</p>
+<p><img src="https://s1.ax1x.com/2018/10/20/iBpPoV.png" srcset="/img/loading.gif" lazyload alt="iBpPoV.png"></p>
+<p>完美解决</p>
+<p>让我们考虑树上差分</p>
+<h2 id="一-关于边的差分（如找被所有路径共同覆盖的边）"><a href="#一-关于边的差分（如找被所有路径共同覆盖的边）" class="headerlink" title="一.关于边的差分（如找被所有路径共同覆盖的边）"></a>一.关于边的差分（如找被所有路径共同覆盖的边）</h2><p>首先我们除了一般的grand，depth等数组以外，多开两个数组：tmp和prev。</p>
+<p>tmp用来记录点的出现次数（具体点说实际上记录的是点到其父亲的边的出现次数），prev记录每个点到其父亲的那条边。对于一条起点s，终点t的路径。我们这样处理：</p>
+<p>tmp[s]++,tmp[t]++,tmp[LCA(s,t)]-&#x3D;2。（记住：最后要从所有叶结点把权值向上累加。）以一次操作为例，我们来看看效果（可以画一张图）。首先tmp[s]++，一直推上去到根，这时候s到root的路径访问次数都+1，tmp[t]++后，t到lca路径加了1，s到lca路径加了1，而lca到根的路径加了2。</p>
+<p>这时，我们只需要tmp[LCA(s,t)]-&#x3D;2，推到根，就能把那些多余的路径减掉，达到想要的目的。而这是一次操作，对于很多次操作的话，我们只需要维护tmp，而不必每次更新到根，维护好tmp最后Dfs一遍即可。这时如果tmp[i]&#x3D;&#x3D;次数的话，说明i到其父亲的边是被所有路径覆盖的。如图</p>
+<p><img src="https://s1.ax1x.com/2018/10/20/iBpSLn.png" srcset="/img/loading.gif" lazyload alt="iBpSLn.png"></p>
+<p>放一个例题代码：运输计划</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;iostream&gt;</span><br><span class="hljs-comment">#include&lt;stdio.h&gt;</span><br><span class="hljs-comment">#include&lt;cstring&gt;</span><br>using namespace std;<br>struct ss&#123;<br>    int next,<span class="hljs-keyword">to</span>,val;<br>&#125;;ss data[600010];<br>struct truck&#123;<br>    int s,t,lca;<br>&#125;;truck node[300010];<br>int n,m,p,flag,cnt,maxn;<br>int head[300010],deep[300010],f[300010][25],dis[300010],pre[300010],sum[300010];<br>void change(int &amp;a,int &amp;b)<br>&#123;<br>    int <span class="hljs-attribute">t</span>=a;a=b;b=t;<br>&#125;<br>void <span class="hljs-built_in">add</span>(int a,int b,int c)<br>&#123;<br>    data[++p].<span class="hljs-attribute">to</span>=b;<br>    data[p].<span class="hljs-attribute">next</span>=head[a];<br>    data[p].<span class="hljs-attribute">val</span>=c;<br>    head[a]=p;<br>&#125;<br>void dfs(int a,int fa)<br>&#123;<br>    deep[a]=deep[fa]+1;<br>    f[a][0]=fa;<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=1;i&lt;=20;i++)<br>    f[a][i]=f[f[a][i-1]][i-1];<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=head[a];i;<span class="hljs-attribute">i</span>=data[i].next)<br>    &#123;<br>        int <span class="hljs-attribute">v</span>=data[i].<span class="hljs-keyword">to</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-attribute">v</span>==fa) continue;<br>        dis[v]=dis[a]+data[i].val;<br>        pre[v]=data[i].val;<br>        dfs(v,a);<br>    &#125;<br>&#125;<br>int getlca(int a,int b)<br>&#123;<br>    <span class="hljs-keyword">if</span>(deep[a]&gt;deep[b]) change(a,b);<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=20;i&gt;=0;i--)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(deep[a]&lt;=deep[f[b][i]])<br>        <span class="hljs-attribute">b</span>=f[b][i];<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-attribute">a</span>==b) return a;<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=20;i&gt;=0;i--)<br>    <span class="hljs-keyword">if</span>(f[a][i]!=f[b][i])<br>    &#123;<br>        <span class="hljs-attribute">a</span>=f[a][i];<br>        <span class="hljs-attribute">b</span>=f[b][i];<br>    &#125;<br>    return f[a][0];<br>&#125;<br>int judge(int a,int fa,int cnt,int maxn)<br>&#123;<br>    int <span class="hljs-attribute">nsum</span>=sum[a];<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=head[a];i;<span class="hljs-attribute">i</span>=data[i].next)<br>    &#123;<br>        int <span class="hljs-attribute">v</span>=data[i].<span class="hljs-keyword">to</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-attribute">v</span>==fa) continue;<br>        nsum+=judge(v,a,cnt,maxn); <br>    &#125;<br>    <span class="hljs-keyword">if</span>(nsum&gt;=cnt&amp;&amp;pre[a]&gt;=maxn) <span class="hljs-attribute">flag</span>=1;<br>    return nsum;<br>&#125;<br>int check(long long limit)<br>&#123;<br>    memset(sum,0,sizeof(sum));<br>    <span class="hljs-attribute">cnt</span>=0,flag=0,maxn=0;<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=1;i&lt;=m;i++)<br>    <span class="hljs-keyword">if</span>(dis[node[i].s]+dis[node[i].t]-2<span class="hljs-number">*d</span>is[node[i].lca]&gt;limit)<br>    &#123;<br>        sum[node[i].s]++,sum[node[i].t]++,sum[node[i].lca]<span class="hljs-attribute">-</span>=2;<br>        cnt++;<br>        <span class="hljs-attribute">maxn</span>=max(maxn,dis[node[i].s]+dis[node[i].t]-2<span class="hljs-number">*d</span>is[node[i].lca]);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-attribute">cnt</span>==0) return 1;<br>    int <span class="hljs-attribute">wsb</span>=judge(1,0,cnt,maxn-limit);<br>    return flag;<br>&#125;<br>int main()<br>&#123;<br>    scanf(<span class="hljs-string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=1;i&lt;=n-1;i++)<br>    &#123;<br>        int a,b,c;<br>        scanf(<span class="hljs-string">&quot;%d%d%d&quot;</span>,&amp;a,&amp;b,&amp;c);<br>        <span class="hljs-built_in">add</span>(a,b,c);<br>        <span class="hljs-built_in">add</span>(b,a,c);<br>    &#125;<br>    dfs(1,0);<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=1;i&lt;=m;i++)<br>    &#123;<br>        scanf(<span class="hljs-string">&quot;%d%d&quot;</span>,&amp;node[i].s,&amp;node[i].t);<br>        node[i].<span class="hljs-attribute">lca</span>=getlca(node[i].s,node[i].t);<br>    &#125;<br>    long long <span class="hljs-attribute">l</span>=0,r=3000000000;<br>    <span class="hljs-keyword">while</span>(l+1&lt;r)<br>    &#123;<br>        int mid=(l+r)/2;<br>        <span class="hljs-keyword">if</span>(check(mid)) <span class="hljs-attribute">r</span>=mid;<br>        <span class="hljs-keyword">else</span> <span class="hljs-attribute">l</span>=mid;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(check(l)) printf(<span class="hljs-string">&quot;%lld\n&quot;</span>,l);<br>    <span class="hljs-keyword">else</span> printf(<span class="hljs-string">&quot;%lld\n&quot;</span>,r);<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="二-关于点的差分（如将路径上的所有点权值加一，求最后点的权值）"><a href="#二-关于点的差分（如将路径上的所有点权值加一，求最后点的权值）" class="headerlink" title="二.关于点的差分（如将路径上的所有点权值加一，求最后点的权值）"></a>二.关于点的差分（如将路径上的所有点权值加一，求最后点的权值）</h2><p>此操作中我们这样维护：每次经过一条边，（如从u到v）我们让tmp[u]++,tmp[v]++,tmp[LCA(u,v)]–,tmp[grand[LCA(u,v)][0]]–。（最后要把tmp推上去）</p>
+<p>以一次添加为例想象一下，首先u到根的路径上tmp都+1，此时u到根间结点tmp都为1，之后v到根路径上tmp+1，此时u到LCA前一个，v到LCA前一个点的tmp都+1，而LCA到根的所有点都+2，然后从tmp[LCA]–,更新上去，此时u-v路上所有tmp都+1，已经达到目的。</p>
+<p>而多余的是什么部分呢，也就是LCA的上一个结点（grand[LCA][0]）到根的这一段都多加了1，所以tmp[grand[LCA][0]]–,更新上去，也就完成了。</p>
+<p>实际操作时也不需要每次更新都推上去，只要把四个tmp维护好，最后Dfs走一边就更新完了。</p>
+<p><img src="https://s1.ax1x.com/2018/10/20/iBp9Zq.png" srcset="/img/loading.gif" lazyload alt="iBp9Zq.png"></p>
+<p>放一个例题代码：松鼠的新家</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs prolog">#include&lt;iostream&gt;<br>#include&lt;stdio.h&gt;<br>using namespace std;<br>struct ss&#123;<br>    int next,to;<br>&#125;;ss data[<span class="hljs-number">600010</span>];<br>int n,q;<br>int a[<span class="hljs-number">300010</span>],head[<span class="hljs-number">600010</span>],deep[<span class="hljs-number">300010</span>],p[<span class="hljs-number">300010</span>][<span class="hljs-number">25</span>],sum[<span class="hljs-number">300010</span>];<br>void change(int &amp;a,int &amp;b)<br>&#123;<br>    int t=a;a=b;b=t;<br>&#125;<br>void add(int a,int b)<br>&#123;<br>    data[++q].to=b;<br>    data[q].next=head[a];<br>    head[a]=q;<br>&#125;<br>void dfs(int a,int fa)<br>&#123;<br>    deep[a]=deep[fa]+<span class="hljs-number">1</span>;<br>    p[a][<span class="hljs-number">0</span>]=fa;<br>    for(int i=<span class="hljs-number">1</span>;(<span class="hljs-number">1</span>&lt;&lt;i)&lt;=deep[a];i++)<br>    p[a][i]=p[p[a][i<span class="hljs-number">-1</span>]][i<span class="hljs-number">-1</span>];<br>    for(int i=head[a];i;i=data[i].next)<br>    &#123;<br>        int v=data[i].to;<br>        if(v!=fa)<br>        dfs(v,a);<br>    &#125;<br>&#125;<br>int lca(int a,int b)<br>&#123;<br>    if(deep[a]&gt;deep[b]) change(a,b);<br>    for(int i=<span class="hljs-number">20</span>;i&gt;=<span class="hljs-number">0</span>;i--)<br>    &#123;<br>        if(deep[a]&lt;=deep[b]-(<span class="hljs-number">1</span>&lt;&lt;i))<br>        &#123;<br>            //printf(<span class="hljs-string">&quot;a=%d %d %d\n&quot;</span>,a,b,i);<br>            b=p[b][i];<br>        &#125;<br>    &#125;<br>    //printf(<span class="hljs-string">&quot;%d %d\n&quot;</span>,a,b);<br>    if(a==b) return a;<br>    for(int i=<span class="hljs-number">20</span>;i&gt;=<span class="hljs-number">0</span>;i--)<br>    &#123;<br>        if(p[a][i]!=p[b][i])<br>        a=p[a][i],b=p[b][i];<br>    &#125;<br>    //printf(<span class="hljs-string">&quot;a=%d\n&quot;</span>,a);<br>    return p[a][<span class="hljs-number">0</span>];<br>&#125;<br>void search(int a)<br>&#123;<br>    for(int i=head[a];i;i=data[i].next)<br>    &#123;<br>        int v=data[i].to;<br>        if(v==p[a][<span class="hljs-number">0</span>]) continue;<br>        search(v);<br>        sum[a]+=sum[v];<br>    &#125;<br>&#125;<br>int main()<br>&#123;<br>    scanf(<span class="hljs-string">&quot;%d&quot;</span>,&amp;n);<br>    for(int i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    scanf(<span class="hljs-string">&quot;%d&quot;</span>,&amp;a[i]);<br>    for(int i=<span class="hljs-number">1</span>;i&lt;=n<span class="hljs-number">-1</span>;i++)<br>    &#123;<br>        int u,v;<br>        scanf(<span class="hljs-string">&quot;%d%d&quot;</span>,&amp;u,&amp;v);<br>        add(u,v);add(v,u);<br>    &#125;<br>    dfs(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);<br>    for(int i=<span class="hljs-number">1</span>;i&lt;=n<span class="hljs-number">-1</span>;i++)<br>    &#123;<br>        int x=a[i],y=a[i+<span class="hljs-number">1</span>],<span class="hljs-symbol">LCA</span>=lca(x,y);<br>        //printf(<span class="hljs-string">&quot;lca=%d\n&quot;</span>,<span class="hljs-symbol">LCA</span>);<br>        sum[x]++;<br>        sum[y]++;<br>        sum[<span class="hljs-symbol">LCA</span>]--;<br>        sum[p[<span class="hljs-symbol">LCA</span>][<span class="hljs-number">0</span>]]--;<br>    &#125;<br>    search(<span class="hljs-number">1</span>);<br>    for(int i=<span class="hljs-number">2</span>;i&lt;=n;i++)<br>    sum[a[i]]--;<br>    <br>    for(int i=<span class="hljs-number">1</span>;i&lt;=n;i++)<br>    printf(<span class="hljs-string">&quot;%d\n&quot;</span>,sum[i]);<br>    return <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B7%AE%E5%88%86/" class="print-no-link">#差分</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>树上差分</div>
+      <div>https://ysjily.github.io/2018/10/20/ys/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>lyf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2018年10月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/10/20/spy/" title="间谍网络">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">间谍网络</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/10/20/ysj/" title="线性同余方程">
+                        <span class="hidden-mobile">线性同余方程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
